@@ -178,10 +178,13 @@ body {
     cursor: pointer;
     font-size: 0.7rem;
     display: none;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .page-item:hover .delete-btn {
-    display: block;
+    display: flex;
 }
 
 .modal {
@@ -327,6 +330,7 @@ body {
     color: white;
     z-index: 3000;
     animation: slideInRight 0.3s ease-out;
+    min-height: 50px; /* 最小高さを設定 */
 }
 
 .toast.success {
