@@ -9,7 +9,7 @@ if (-Not (Test-Path -Path $InstallPath)) {
     New-Item -ItemType Directory -Path $InstallPath -Force | Out-Null
 }
 # Copy the PDF Editor files to the installation path
-$sourcePath = "$PSScriptRoot\PDFEditor"
+$sourcePath = "$PSScriptRoot"
 if (Test-Path -Path $sourcePath) {
     Copy-Item -Path $sourcePath\* -Destination $InstallPath -Recurse -Force
 } else {
