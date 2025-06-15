@@ -317,7 +317,7 @@ def main():
     )
     
     # アプリケーション開始
-    webview.start(debug=True)
+    webview.start(debug=False)
 
 if __name__ == '__main__':
     main()
