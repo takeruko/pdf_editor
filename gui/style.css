@@ -104,7 +104,8 @@ body {
 
 .main-content {
     padding: 2rem;
-    max-width: 1200px;
+    /* max-width: 1200px; */
+    width: 100%;
     margin: 0 auto;
     height: calc(100vh - 180px); /* ヘッダーの高さを除いた高さ */
     display: flex;
@@ -113,7 +114,7 @@ body {
 
 .pages-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 0.5rem;
     flex: 1;
     overflow-y: auto;
@@ -154,7 +155,7 @@ body {
 .page-thumbnail {
     width: 100%;
     height: auto;
-    max-height: 120px;
+    max-height: 240px;
     object-fit: contain;
     border-radius: 4px;
     margin-bottom: 0.3rem;

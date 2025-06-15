@@ -28,7 +28,7 @@ function renderPages() {
     }
     
     // PDFが読み込まれた場合は通常のグリッドに戻す
-    container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(120px, 1fr))';
+    container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(180px, 1fr))';
     container.style.placeItems = 'unset';
     
     container.innerHTML = '';
@@ -310,7 +310,9 @@ async function mergePDFFile(filePath, password = null) {
 // ページを削除
 function deletePage(pageId) {
     if (confirm('このページを削除しますか？')) {
+        showLoading();
         deletePageById(pageId);
+        hideLoading();
     }
 }
 
@@ -322,10 +324,12 @@ function deleteSelected() {
     }
     
     if (confirm(`選択された${selectedPages.length}ページを削除しますか？`)) {
+        showLoading();
         selectedPages.forEach(pageId => {
             deletePageById(pageId);
         });
         selectedPages = [];
+        hideLoading();
     }
 }
 
