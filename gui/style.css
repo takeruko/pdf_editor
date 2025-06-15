@@ -106,7 +106,7 @@ body {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
-    height: calc(100vh - 170px); /* ヘッダーの高さを除いた高さ */
+    height: calc(100vh - 180px); /* ヘッダーの高さを除いた高さ */
     display: flex;
     flex-direction: column;
 }

@@ -156,6 +156,7 @@ async function showPagePreview(pageId) {
 
 // ページ順序の変更
 async function reorderPages(draggedPageId, targetPageId) {
+    showLoading();
     const draggedIndex = currentPages.findIndex(p => p.id == draggedPageId);
     const targetIndex = currentPages.findIndex(p => p.id == targetPageId);
     
@@ -186,6 +187,9 @@ async function reorderPages(draggedPageId, targetPageId) {
         // エラーの場合は元の順序に戻す
         currentPages.splice(targetIndex, 1);
         currentPages.splice(draggedIndex, 0, draggedPage);
+    }
+    finally {
+        hideLoading();
     }
 }
 
