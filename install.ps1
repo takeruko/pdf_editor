@@ -54,7 +54,7 @@ $shortcut.Arguments = '--WindowStyle Hidden -ExecutionPolicy Bypass -Command "uv
 $shortcut.WorkingDirectory = $InstallPath
 $shortcut.WindowStyle = 7 # Minimized window
 $shortcut.Description = "PDF Editor Application"
-$shortcut.IconLocation = "$InstallPath\icon¥pdf_editor.ico"
+$shortcut.IconLocation = "$InstallPath\icon\pdf_editor.ico"
 $shortcut.Save()
 
 # Copy the shortcut to the Start Menu
