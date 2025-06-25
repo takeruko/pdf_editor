@@ -198,13 +198,23 @@ async function openPDF() {
     showLoading();
     
     try {
-        const filePath = await pywebview.api.open_file_dialog('PDF files (*.pdf)');
-        if (!filePath) {
+        const filePaths = await pywebview.api.open_file_dialog('PDF files (*.pdf)');
+        if (!filePaths || filePaths.length === 0) {
             hideLoading();
             return;
         }
         
-        await loadPDF(filePath);
+        // 最初のファイルはloadPDFで開き、残りはmergePDFFileで結合
+        await loadPDF(filePaths[0]);
+        for (let i = 1; i < filePaths.length; i++) {
+            await mergePDFFile(filePaths[i], null, false); // 結合時はトーストを表示しない
+        }
+        // ファイルを開いたことを通知
+        if (filePaths.length === 1) {
+            showToast(`${filePaths[0].split(/[\\/]/).pop()} を開きました`, 'success');
+        } else if (filePaths.length > 1) {
+            showToast(`${filePaths.length} ファイルを開きました`, 'success');
+        }
     } catch (error) {
         showToast('ファイル選択に失敗しました', 'error');
         hideLoading();
@@ -230,7 +240,7 @@ async function loadPDF(filePath, password = null) {
             document.getElementById('filename-text').textContent = result.filename;
             document.getElementById('filename-display').classList.add('visible');
             
-            showToast(`${result.filename} を開きました`, 'success');
+            //showToast(`${result.filename} を開きました`, 'success');
         } else if (result.error === 'password_required') {
             currentOperation = { type: 'open', filePath: filePath };
             showPasswordDialog();
@@ -261,13 +271,14 @@ async function mergePDF() {
     showLoading();
     
     try {
-        const filePath = await pywebview.api.open_file_dialog('PDF files (*.pdf)');
-        if (!filePath) {
+        const filePaths = await pywebview.api.open_file_dialog('PDF files (*.pdf)');
+        if (!filePaths || filePaths.length === 0) {
             hideLoading();
             return;
         }
-        
-        await mergePDFFile(filePath);
+        for (const filePath of filePaths) {
+           await mergePDFFile(filePath);
+        }
     } catch (error) {
         showToast('ファイル選択に失敗しました', 'error');
         hideLoading();
@@ -275,7 +286,7 @@ async function mergePDF() {
 }
 
 // PDFファイルを結合実行
-async function mergePDFFile(filePath, password = null) {
+async function mergePDFFile(filePath, password = null, showToastOnSuccess = true) {
     // パスワード入力からの呼び出しでない場合のみローディング表示
     if (password === null) {
         showLoading();
@@ -287,7 +298,9 @@ async function mergePDFFile(filePath, password = null) {
         if (result.success) {
             currentPages = result.pages;
             renderPages();
-            showToast(result.message, 'success');
+            if (showToastOnSuccess) {
+               showToast(result.message, 'success');
+            }
         } else if (result.error === 'password_required') {
             currentOperation = { type: 'merge', filePath: filePath };
             showPasswordDialog();
