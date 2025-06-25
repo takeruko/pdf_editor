@@ -20,10 +20,10 @@ class PDFEditorAPI:
         try:
             result = webview.windows[0].create_file_dialog(
                 webview.OPEN_DIALOG,
-                allow_multiple=False,
+                allow_multiple=True,
                 file_types=(file_types,)
             )
-            return result[0] if result else None
+            return result if result else []
         except Exception as e:
             return None
     
